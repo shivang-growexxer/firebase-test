@@ -91,18 +91,44 @@ class UserList extends StatelessWidget {
                       ),
                     );
                   },
-                  child: ListTile(
-                    title: Text('${user.firstName} ${user.lastName}'),
-                    subtitle: Text('Age: ${user.age}, ${user.email}'),
-                    trailing: IconButton(
-                      icon: Icon(Icons.delete),
-                      color: Colors.red,
-                      onPressed: () {
-                        context.read<UserBloc>().add(DeleteUser(userId));
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('User deleted')),
-                        );
-                      },
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                      top: 8.0,
+                      left: 10,
+                      right: 10,
+                    ),
+                    child: Container(
+                      padding: EdgeInsets.all(3),
+                      decoration: BoxDecoration(
+                        color: Colors.blueGrey,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: ListTile(
+                        title: Text(
+                          '${user.firstName} ${user.lastName}',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        subtitle: Text(
+                          'Age: ${user.age}, ${user.email}',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        trailing: IconButton(
+                          icon: Icon(Icons.edit),
+                          color: Colors.greenAccent,
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder:
+                                    (_) => UpdateUserScreen(
+                                      userId: userId,
+                                      user: user,
+                                    ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
                     ),
                   ),
                 ),

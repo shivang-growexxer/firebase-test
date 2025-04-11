@@ -51,7 +51,12 @@ class _UpdateUserScreenState extends State<UpdateUserScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Update User")),
+      backgroundColor: Colors.blueGrey[50],
+      appBar: AppBar(
+        title: const Text("Update User"),
+        backgroundColor: Colors.blueGrey[800],
+        foregroundColor: Colors.white,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Form(
@@ -60,11 +65,32 @@ class _UpdateUserScreenState extends State<UpdateUserScreen> {
             children: [
               _buildTextField(_firstNameController, 'First Name'),
               _buildTextField(_lastNameController, 'Last Name'),
-              _buildTextField(_emailController, 'Email', type: TextInputType.emailAddress),
-              _buildTextField(_numberController, 'Phone Number'),
-              _buildTextField(_ageController, 'Age', type: TextInputType.number),
+              _buildTextField(
+                _emailController,
+                'Email',
+                type: TextInputType.emailAddress,
+              ),
+              _buildTextField(
+                _numberController,
+                'Phone Number',
+                type: TextInputType.phone,
+              ),
+              _buildTextField(
+                _ageController,
+                'Age',
+                type: TextInputType.number,
+              ),
               const SizedBox(height: 20),
-              ElevatedButton(onPressed: _submit, child: const Text("Update User")),
+              ElevatedButton(
+                onPressed: _submit,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.green[700],
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                  textStyle: const TextStyle(fontSize: 16),
+                ),
+                child: const Text("Update User"),
+              ),
             ],
           ),
         ),
@@ -72,17 +98,55 @@ class _UpdateUserScreenState extends State<UpdateUserScreen> {
     );
   }
 
-  Widget _buildTextField(TextEditingController controller, String label,
-      {TextInputType type = TextInputType.text}) {
+  Widget _buildTextField(
+    TextEditingController controller,
+    String label, {
+    TextInputType type = TextInputType.text,
+  }) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 12.0),
       child: TextFormField(
         controller: controller,
         keyboardType: type,
-        validator: (value) => value == null || value.isEmpty ? 'Required' : null,
+        validator: (value) {
+          if (value == null || value.trim().isEmpty) {
+            return 'This field is required';
+          }
+          if (label == 'Email' &&
+              !RegExp(
+                r'^[\w-\.]+@([\w-]+\.)+[\w]{2,4}$',
+              ).hasMatch(value.trim())) {
+            return 'Enter a valid email address';
+          }
+          if (label == 'Phone Number' &&
+              !RegExp(r'^\d{10}$').hasMatch(value.trim())) {
+            return 'Enter a valid 10-digit phone number';
+          }
+          if (label == 'Age') {
+            final age = int.tryParse(value.trim());
+            if (age == null || age <= 0 || age > 120) {
+              return 'Enter a valid age (1-120)';
+            }
+          }
+          return null;
+        },
         decoration: InputDecoration(
           labelText: label,
-          border: const OutlineInputBorder(),
+          labelStyle: TextStyle(color: Colors.blueGrey[900]),
+          filled: true,
+          fillColor: Colors.white,
+          border: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.blueGrey.shade300),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.blueGrey.shade400),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.green.shade700, width: 2),
+            borderRadius: BorderRadius.circular(8),
+          ),
         ),
       ),
     );

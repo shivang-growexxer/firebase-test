@@ -42,7 +42,12 @@ class _AddUserScreenState extends State<AddUserScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Add User")),
+      backgroundColor: Colors.blueGrey[50],
+      appBar: AppBar(
+        title: const Text("Add User"),
+        backgroundColor: Colors.blueGrey[800],
+        foregroundColor: Colors.white,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Form(
@@ -51,14 +56,32 @@ class _AddUserScreenState extends State<AddUserScreen> {
             children: [
               _buildTextField(_firstNameController, 'First Name'),
               _buildTextField(_lastNameController, 'Last Name'),
-              _buildTextField(_emailController, 'Email',
-                  type: TextInputType.emailAddress),
-              _buildTextField(_numberController, 'Phone Number',
-                  type: TextInputType.phone),
-              _buildTextField(_ageController, 'Age',
-                  type: TextInputType.number),
+              _buildTextField(
+                _emailController,
+                'Email',
+                type: TextInputType.emailAddress,
+              ),
+              _buildTextField(
+                _numberController,
+                'Phone Number',
+                type: TextInputType.phone,
+              ),
+              _buildTextField(
+                _ageController,
+                'Age',
+                type: TextInputType.number,
+              ),
               const SizedBox(height: 20),
-              ElevatedButton(onPressed: _submit, child: const Text("Add User")),
+              ElevatedButton(
+                onPressed: _submit,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.green[700],
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                  textStyle: const TextStyle(fontSize: 16),
+                ),
+                child: const Text("Add User"),
+              ),
             ],
           ),
         ),
@@ -66,8 +89,11 @@ class _AddUserScreenState extends State<AddUserScreen> {
     );
   }
 
-  Widget _buildTextField(TextEditingController controller, String label,
-      {TextInputType type = TextInputType.text}) {
+  Widget _buildTextField(
+    TextEditingController controller,
+    String label, {
+    TextInputType type = TextInputType.text,
+  }) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 12.0),
       child: TextFormField(
@@ -78,8 +104,9 @@ class _AddUserScreenState extends State<AddUserScreen> {
             return 'This field is required';
           }
           if (label == 'Email' &&
-              !RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w]{2,4}$')
-                  .hasMatch(value.trim())) {
+              !RegExp(
+                r'^[\w-\.]+@([\w-]+\.)+[\w]{2,4}$',
+              ).hasMatch(value.trim())) {
             return 'Enter a valid email address';
           }
           if (label == 'Phone Number' &&
@@ -96,7 +123,21 @@ class _AddUserScreenState extends State<AddUserScreen> {
         },
         decoration: InputDecoration(
           labelText: label,
-          border: const OutlineInputBorder(),
+          labelStyle: TextStyle(color: Colors.blueGrey[900]),
+          filled: true,
+          fillColor: Colors.white,
+          border: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.blueGrey.shade300),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.blueGrey.shade400),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.green.shade700, width: 2),
+            borderRadius: BorderRadius.circular(8),
+          ),
         ),
       ),
     );
