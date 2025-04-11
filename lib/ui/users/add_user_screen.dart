@@ -75,7 +75,7 @@ class _AddUserScreenState extends State<AddUserScreen> {
               ElevatedButton(
                 onPressed: _submit,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green[700],
+                  backgroundColor: Colors.greenAccent,
                   foregroundColor: Colors.white,
                   padding: const EdgeInsets.symmetric(vertical: 14),
                   textStyle: const TextStyle(fontSize: 16),
@@ -135,7 +135,7 @@ class _AddUserScreenState extends State<AddUserScreen> {
             borderRadius: BorderRadius.circular(8),
           ),
           focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.green.shade700, width: 2),
+            borderSide: BorderSide(color: Colors.greenAccent, width: 2),
             borderRadius: BorderRadius.circular(8),
           ),
         ),
